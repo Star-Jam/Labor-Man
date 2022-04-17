@@ -17,13 +17,42 @@ public class EnemyBase : MonoBehaviour
     float _enemyHp = 1f;
 
     [SerializeField]
+    [Header("壁のtag")]
+    string _wallTag;
+
+    [SerializeField]
     Move _move = Move.Idle;
+    private void Update()
+    {
+        EnemyMove();
+    }
     void EnemyMove()
     {
         _enemySpeed = transform.position.x;
-        if (_move == Move.Right)
+        Transform myTransform = this.transform;
+        Vector2 pos = myTransform.localPosition;
+        while (_move == Move.Right)
         {
-            _enemySpeed++;
+            pos.x -= _enemySpeed;
+        }
+        while (_move == Move.Left)
+        {
+            pos.x += _enemySpeed;
+        }
+        myTransform.position = pos;
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.tag == _wallTag)
+            {
+                if (_move == Move.Left)
+                {
+                    _move = Move.Right;
+                }
+                if (_move == Move.Right)
+                {
+                    _move = Move.Right;
+                }
+            }
         }
     }
     enum Move
