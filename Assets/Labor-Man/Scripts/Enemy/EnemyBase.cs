@@ -20,7 +20,7 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField]
     [Header("壁のtag")]
-    string _wallTag;
+    string _wallTag = "Wall";
 
     [SerializeField]
     Move _move = Move.Idle;
@@ -46,17 +46,17 @@ public class EnemyBase : MonoBehaviour
             _myTransform.Translate(-_enemySpeed, 0, 0);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == _wallTag)
+        if (collision.gameObject.tag == _wallTag)
         {
             if (_move == Move.Left)
             {
                 _move = Move.Right;
             }
-            if (_move == Move.Right)
+            else if (_move == Move.Right)
             {
-                _move = Move.Right;
+                _move = Move.Left;
             }
         }
      }
