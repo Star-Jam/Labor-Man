@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Collider2D))]
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public class EnemyBase : MonoBehaviour
 {
     public float Speed => _enemySpeed;
+    Transform _myTransform = default;
 
     [SerializeField]
     [Header("Enemyのスピード")]
@@ -22,39 +24,42 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField]
     Move _move = Move.Idle;
+
+    private void Start()
+    {
+        _myTransform = this.transform;
+    }
+
     private void Update()
     {
         EnemyMove();
     }
     void EnemyMove()
     {
-        _enemySpeed = transform.position.x;
-        Transform myTransform = this.transform;
-        Vector2 pos = myTransform.localPosition;
-        while (_move == Move.Right)
+        //Vector2 pos = _myTransform.localPosition;
+        if (_move == Move.Right)
         {
-            pos.x -= _enemySpeed;
+            _myTransform.Translate(_enemySpeed, 0, 0);
         }
-        while (_move == Move.Left)
+        if (_move == Move.Left)
         {
-            pos.x += _enemySpeed;
-        }
-        myTransform.position = pos;
-        void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.tag == _wallTag)
-            {
-                if (_move == Move.Left)
-                {
-                    _move = Move.Right;
-                }
-                if (_move == Move.Right)
-                {
-                    _move = Move.Right;
-                }
-            }
+            _myTransform.Translate(-_enemySpeed, 0, 0);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == _wallTag)
+        {
+            if (_move == Move.Left)
+            {
+                _move = Move.Right;
+            }
+            if (_move == Move.Right)
+            {
+                _move = Move.Right;
+            }
+        }
+     }
     enum Move
     {
         Idle,
