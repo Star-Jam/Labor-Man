@@ -25,6 +25,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     Move _move = Move.Idle;
 
+
     private void Start()
     {
         _myTransform = this.transform;
@@ -36,35 +37,37 @@ public class EnemyBase : MonoBehaviour
     }
     void EnemyMove()
     {
-        //Vector2 pos = _myTransform.localPosition;
-        if (_move == Move.Right)
-        {
-            _myTransform.Translate(_enemySpeed, 0, 0);
-        }
         if (_move == Move.Left)
         {
             _myTransform.Translate(-_enemySpeed, 0, 0);
+        }
+        if (_move == Move.Right)
+        {
+            _myTransform.Translate(_enemySpeed, 0, 0);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == _wallTag)
         {
-            if (_move == Move.Left)
-            {
-                _move = Move.Right;
-            }
-            else if (_move == Move.Right)
+            Vector3 _scale = transform.localScale;
+            if (_move == Move.Right)
             {
                 _move = Move.Left;
+                _scale.x = 1;
+            }
+            else if (_move == Move.Left)
+            {
+                _move = Move.Right;
+                _scale.x = -1;
             }
         }
      }
     enum Move
     {
         Idle,
-        Right,
-        Left
+        Left,
+        Right
     }
 
 }
