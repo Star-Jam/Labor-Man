@@ -61,6 +61,7 @@ public class EnemyBase : MonoBehaviour
                 _move = Move.Right;
                 _scale.x = -1;
             }
+            transform.localScale = _scale;
         }
      }
     enum Move
