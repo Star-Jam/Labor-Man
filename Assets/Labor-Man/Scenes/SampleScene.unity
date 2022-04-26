@@ -438,12 +438,17 @@ PrefabInstance:
     - target: {fileID: 4047634722077092060, guid: a25b5156f3bc9ef48b76d88809d01c4a,
         type: 3}
       propertyPath: _speed
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4047634722077092060, guid: a25b5156f3bc9ef48b76d88809d01c4a,
         type: 3}
       propertyPath: _groundTag
       value: Finish
+      objectReference: {fileID: 0}
+    - target: {fileID: 4047634722077092060, guid: a25b5156f3bc9ef48b76d88809d01c4a,
+        type: 3}
+      propertyPath: _controlSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4250908796338943464, guid: a25b5156f3bc9ef48b76d88809d01c4a,
         type: 3}

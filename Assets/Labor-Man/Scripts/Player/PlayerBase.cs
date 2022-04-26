@@ -18,6 +18,10 @@ public class PlayerBase : MonoBehaviour, IDamageble
     float _speed;
 
     [SerializeField]
+    [Header("速度抑制用の数値")]
+    float _controlSpeed = 100;
+
+    [SerializeField]
     [Header("敵のタグ")]
     string _enemyTag;
 
@@ -47,9 +51,10 @@ public class PlayerBase : MonoBehaviour, IDamageble
 
     bool _isGrounded = false;
 
-    private void Start()
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _sp = GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Attack()
@@ -62,7 +67,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
         _hp += recoveryAmount;
     }
 
-    public void AddDamage(int damage)
+    void IDamageble.AddDamage(int damage)
     {
         _hp -= damage;
     }
@@ -70,8 +75,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
-        _dir = new Vector2(inputMoveMent.x, inputMoveMent.y);
-        Debug.Log(_dir);
+        _dir = new Vector2(inputMoveMent.x,0);
         _rb.velocity = _dir * _speed;
         Inversion();
     }
@@ -85,21 +89,21 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.tag == _groundTag)
+        if(collision.gameObject.tag == _groundTag)
         {
             _isGrounded = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.tag == _groundTag)
+        if (collision.gameObject.tag == _groundTag)
         {
             _isGrounded = false;
         }
-    }
+    } 
 
     void Inversion()
     {
