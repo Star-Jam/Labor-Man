@@ -13,6 +13,11 @@ public class EnemyBase : MonoBehaviour
     [Header("Enemyのスピード")]
     float _enemySpeed = 0f;
 
+    [SerializeField]
+    [Header("Speed抑制")]
+    float _enemySpeedControl = 100;
+
+
     public float EnemyHp => _enemyHp; 
     [SerializeField]
     [Header("EnemyのHP")]
@@ -39,11 +44,11 @@ public class EnemyBase : MonoBehaviour
     {
         if (_move == Move.Left)
         {
-            _myTransform.Translate(-_enemySpeed, 0, 0);
+            _myTransform.Translate(-_enemySpeed / _enemySpeedControl, 0, 0);
         }
         if (_move == Move.Right)
         {
-            _myTransform.Translate(_enemySpeed, 0, 0);
+            _myTransform.Translate(_enemySpeed / _enemySpeedControl, 0, 0);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
