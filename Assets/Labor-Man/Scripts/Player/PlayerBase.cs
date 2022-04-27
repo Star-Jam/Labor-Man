@@ -26,6 +26,18 @@ public class PlayerBase : MonoBehaviour, IDamageble
     string _enemyTag;
 
     [SerializeField]
+    [Header("Itemのタグ")]
+    string _itemTag;
+
+    [SerializeField]
+    [Header("地面のタグ")]
+    string _groundTag;
+
+    [SerializeField]
+    [Header("壁のタグ")]
+    string _wallTag;
+
+    [SerializeField]
     [Header("PlayerのHP")]
     int _hp;
 
@@ -37,13 +49,6 @@ public class PlayerBase : MonoBehaviour, IDamageble
     [Header("攻撃のインターバル")]
     float _interval;
 
-    [SerializeField]
-    [Header("Itemのタグ")]
-    string _itemTag;
-
-    [SerializeField]
-    [Header("地面のタグ")]
-    string _groundTag;
 
     public bool IsGodMode => _isGodMode;
 
@@ -60,6 +65,11 @@ public class PlayerBase : MonoBehaviour, IDamageble
     protected virtual void Attack()
     {
         Debug.Log("Attack!");
+    }
+
+    protected virtual void SpecialAttack()
+    {
+        Debug.Log("SpecialAttack!");
     }
 
     protected void Heel(int recoveryAmount)
