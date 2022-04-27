@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour
     float _enemySpeed = 0f;
 
     [SerializeField]
-    [Header("Speed抑制")]
+    [Header("Speedを抑制する値")]
     float _enemySpeedControl = 100;
 
 
