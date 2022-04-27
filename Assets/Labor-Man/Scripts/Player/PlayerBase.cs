@@ -85,7 +85,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
-        _dir = new Vector2(inputMoveMent.x,0);
+        _dir.x = inputMoveMent.x;
         _rb.velocity = _dir * _speed;
         Inversion();
     }
