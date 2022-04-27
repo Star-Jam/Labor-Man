@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Threading.Tasks;
 
 public class PlayerBase : MonoBehaviour, IDamageble
 {
@@ -16,10 +17,6 @@ public class PlayerBase : MonoBehaviour, IDamageble
     [SerializeField]
     [Header("Playerのスピード")]
     float _speed;
-
-    [SerializeField]
-    [Header("速度抑制用の数値")]
-    float _controlSpeed = 100;
 
     [SerializeField]
     [Header("敵のタグ")]
@@ -47,13 +44,17 @@ public class PlayerBase : MonoBehaviour, IDamageble
 
     [SerializeField]
     [Header("攻撃のインターバル")]
-    float _interval;
+    int _interval;
+
+    [SerializeField]
+    [Header("敵の攻撃のタグ")]
+    string _enemyBulletTag;
 
 
     public bool IsGodMode => _isGodMode;
-
     public int HP => _hp;
 
+    bool _canAttack = true;
     bool _isGrounded = false;
 
     private void Awake()
@@ -99,6 +100,28 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
+    public async void OnAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            _canAttack = false;
+            Attack();
+            await Task.Delay(_interval);
+            _canAttack = true;
+        }
+    }
+
+    public async void OnSpecialAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            _canAttack = false;
+            SpecialAttack();
+            await Task.Delay(_interval);
+            _canAttack = true;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == _groundTag)
@@ -113,7 +136,20 @@ public class PlayerBase : MonoBehaviour, IDamageble
         {
             _isGrounded = false;
         }
-    } 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == _enemyTag)
+        {
+            //IDamageble.AddDamage(collision.gameObject.GetComponent<EnemyBase>().Power);
+        }
+
+        if(collision.tag == _enemyBulletTag)
+        {
+            //IDamageble.AddDamage(collision.GetComponent<BulletBase>().Power);
+        }
+    }
 
     void Inversion()
     {
