@@ -8,6 +8,7 @@ public class EnemyBase : MonoBehaviour
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
+    public float EnemyHp => _enemyHp; 
 
     [SerializeField]
     [Header("Enemyのスピード")]
@@ -17,8 +18,6 @@ public class EnemyBase : MonoBehaviour
     [Header("Speedを抑制する値")]
     float _enemySpeedControl = 100;
 
-
-    public float EnemyHp => _enemyHp; 
     [SerializeField]
     [Header("EnemyのHP")]
     float _enemyHp = 1f;
