@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public interface IDamageble
 {
-
+    void AddDamage(int damage);
 }
