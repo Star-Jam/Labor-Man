@@ -8,11 +8,8 @@ public class EnemyBase : MonoBehaviour
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
-<<<<<<< HEAD
     public float EnemyHp => _enemyHp; 
-=======
     SpriteRenderer _sp;
->>>>>>> 1305075e110d26787c0fa9eb697933170f7d3b28
 
     [SerializeField]
     [Header("Enemyのスピード")]
@@ -24,24 +21,46 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField]
     [Header("EnemyのHP")]
-    float _enemyHp = 1f;
+    int _enemyHp = 1;
 
     [SerializeField]
     [Header("壁のtag")]
     string _wallTag = "Wall";
 
     [SerializeField]
+    [Header("プレイヤーと接触時に与えるダメージ")]
+    int _onEnemyDamage = default;
+
+    [SerializeField]
     Move _move = Move.Idle;
 
+    public int OnEnemyDamage => _onEnemyDamage;
 
-    private void Start()
+    private void OnEnable()
     {
+        _sp = GetComponent<SpriteRenderer>();
         _myTransform = this.transform;
+        if (_move == Move.Left)
+        {
+            _sp.flipX = false;
+        }
+        else if (_move == Move.Right)
+        {
+            _sp.flipX = true;
+        }
     }
 
     private void Update()
     {
         EnemyMove();
+    }
+    void OnBecameVisible()
+    {
+        this.gameObject.SetActive(true);
+    }
+    void OnBecameInvisible()
+    {
+        this.gameObject.SetActive(false);
     }
     void EnemyMove()
     {
@@ -54,11 +73,18 @@ public class EnemyBase : MonoBehaviour
             _myTransform.Translate(_enemySpeed / _enemySpeedControl, 0, 0);
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    void EnemyDeath()
+    {
+        if(_enemyHp < 1)
+        {
+            Destroy(this. gameObject);
+        }
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == _wallTag)
         {
-            Vector3 _scale = transform.localScale;
             if (_move == Move.Right)
             {
                 _move = Move.Left;
@@ -69,7 +95,6 @@ public class EnemyBase : MonoBehaviour
                 _move = Move.Right;
                 _sp.flipX = true;
             }
-            transform.localScale = _scale;
         }
      }
     enum Move
