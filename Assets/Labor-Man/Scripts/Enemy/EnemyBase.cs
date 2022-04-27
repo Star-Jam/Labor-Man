@@ -8,7 +8,11 @@ public class EnemyBase : MonoBehaviour
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
+<<<<<<< HEAD
     public float EnemyHp => _enemyHp; 
+=======
+    SpriteRenderer _sp;
+>>>>>>> 1305075e110d26787c0fa9eb697933170f7d3b28
 
     [SerializeField]
     [Header("Enemyのスピード")]
@@ -58,12 +62,12 @@ public class EnemyBase : MonoBehaviour
             if (_move == Move.Right)
             {
                 _move = Move.Left;
-                _scale.x = 1;
+                _sp.flipX = false;
             }
             else if (_move == Move.Left)
             {
                 _move = Move.Right;
-                _scale.x = -1;
+                _sp.flipX = true;
             }
             transform.localScale = _scale;
         }
