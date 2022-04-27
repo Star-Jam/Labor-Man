@@ -5,11 +5,11 @@ using System;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    bool _isClear = false;
-    bool _isGameOver = false;
-
     public bool Clear => _isClear;
     public bool GameOver => _isGameOver;
+
+    bool _isClear = false;
+    bool _isGameOver = false;
 
     /// <summary>ステージクリア時の処理を登録する</summary>
     public event Action OnClear;

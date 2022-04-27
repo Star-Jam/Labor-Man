@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Threading.Tasks;
 
-public class PlayerBase : MonoBehaviour, IDamageble
+public abstract class PlayerBase : MonoBehaviour, IDamageble
 {
     Rigidbody2D _rb;
     Vector2 _dir;
@@ -17,6 +17,10 @@ public class PlayerBase : MonoBehaviour, IDamageble
     [SerializeField]
     [Header("Playerのスピード")]
     float _speed;
+
+    [SerializeField]
+    [Header("攻撃力")]
+    int _power;
 
     [SerializeField]
     [Header("敵のタグ")]
@@ -57,23 +61,17 @@ public class PlayerBase : MonoBehaviour, IDamageble
     bool _canAttack = true;
     bool _isGrounded = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
     }
 
-    protected virtual void Attack()
-    {
-        Debug.Log("Attack!");
-    }
+    protected abstract void Attack();
 
-    protected virtual void SpecialAttack()
-    {
-        Debug.Log("SpecialAttack!");
-    }
+    protected abstract void SpecialAttack();
 
-    protected void Heel(int recoveryAmount)
+    protected virtual void Heal(int recoveryAmount)
     {
         _hp += recoveryAmount;
     }
@@ -122,7 +120,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == _groundTag)
         {
@@ -130,7 +128,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    protected virtual void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == _groundTag)
         {
@@ -138,7 +136,7 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == _enemyTag)
         {

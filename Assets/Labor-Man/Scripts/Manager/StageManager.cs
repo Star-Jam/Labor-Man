@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
+    string _avtiveSceneName;
+
+    public string AvtiveSceneName => _avtiveSceneName;
 
     protected override void Awake()
     {
@@ -11,8 +15,8 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    private void Start()
     {
-        
+        _avtiveSceneName = SceneManager.GetActiveScene().name;
     }
 }

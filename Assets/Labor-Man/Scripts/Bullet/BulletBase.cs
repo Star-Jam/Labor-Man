@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBase : MonoBehaviour,IDamageble
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
+
+public class BulletBase : MonoBehaviour
 
 {
     [SerializeField]
@@ -17,18 +20,38 @@ public class BulletBase : MonoBehaviour,IDamageble
     [Header("ダメージ量")]
     int _damage;
 
+    [SerializeField]
+    [Header("動かすタイミング")]
+    MoveMode _moveMode;
 
-    void IDamageble.AddDamage(int damage)
+    Vector2 _dir;
+    Rigidbody2D _rb;
+
+    enum MoveMode
     {
-
+        Strat,
+        Update
     }
-    void Start()
+
+    protected virtual void OnEnable()
     {
-        
+        _rb = GetComponent<Rigidbody2D>();
+        if(_moveMode == MoveMode.Strat)
+        {
+            BulletMove();
+        }
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        
+        if(_moveMode == MoveMode.Update)
+        {
+            BulletMove();
+        }
+    }
+
+    protected virtual void BulletMove()
+    {
+        _rb.velocity = _dir * _bulletSpeed;
     }
 }
