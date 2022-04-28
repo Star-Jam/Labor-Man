@@ -14,8 +14,15 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
         GameManager.Instance.OnClear += () => LoadScene(_nextSceneName);
     }
 
-    void LoadScene(string str)
+    void LoadScene(string name)
     {
-        SceneManager.LoadSceneAsync(str);
+        StartCoroutine(Load(name));
+    }
+
+    IEnumerator Load(string name)
+    {
+        print("開始");
+        yield return SceneManager.LoadSceneAsync(name);
+        print("終わり");
     }
 }

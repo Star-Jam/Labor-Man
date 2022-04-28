@@ -5,9 +5,11 @@ using System;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+    public PlayerBase Player => _player;
     public bool Clear => _isClear;
     public bool GameOver => _isGameOver;
 
+    PlayerBase _player;
     bool _isClear = false;
     bool _isGameOver = false;
 
@@ -22,5 +24,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
     }
 }

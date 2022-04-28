@@ -6,17 +6,26 @@ using System.Threading.Tasks;
 
 public abstract class PlayerBase : MonoBehaviour, IDamageble
 {
-    Rigidbody2D _rb;
-    Vector2 _dir;
-    SpriteRenderer _sp;
+    public bool IsGodMode => _isGodMode;
+    public int HP => _hp;
+    public int Power => _power;
+    public bool Direction => _direction;
 
     [SerializeField]
     [Header("無敵モード")]
     bool _isGodMode = false;
 
     [SerializeField]
+    [Header("右のMuzzleのポジション")]
+    protected Transform _rigthMuzzle;
+
+    [SerializeField]
+    [Header("左のMuzzleのポジション")]
+    protected Transform _leftMuzzle;
+
+    [SerializeField]
     [Header("Playerのスピード")]
-    float _speed;
+    float _speed = 10f; 
 
     [SerializeField]
     [Header("攻撃力")]
@@ -24,47 +33,56 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     [SerializeField]
     [Header("敵のタグ")]
-    string _enemyTag;
+    string _enemyTag = "Enemy";
 
     [SerializeField]
     [Header("Itemのタグ")]
-    string _itemTag;
+    string _itemTag = "Item";
 
     [SerializeField]
     [Header("地面のタグ")]
-    string _groundTag;
+    string _groundTag = "Ground";
 
     [SerializeField]
     [Header("壁のタグ")]
-    string _wallTag;
+    string _wallTag = "Wall";
 
     [SerializeField]
     [Header("PlayerのHP")]
-    int _hp;
+    int _hp = 100;
 
     [SerializeField]
     [Header("ジャンプ力")]
-    float _jumpPower;
+    float _jumpPower = 10f;
 
     [SerializeField]
     [Header("攻撃のインターバル")]
-    int _interval;
+    int _interval = 2;
 
     [SerializeField]
     [Header("敵の攻撃のタグ")]
-    string _enemyBulletTag;
+    string _enemyBulletTag = "EnemyBullet";
+
+    [SerializeField]
+    [Header("遠距離攻撃時に生成したいオブジェクト")]
+    protected GameObject _attackGameObject;
 
 
-    public bool IsGodMode => _isGodMode;
-    public int HP => _hp;
+    Rigidbody2D _rb;
+    Vector2 _dir;
+    SpriteRenderer _sp;
+    protected Transform _muzzle;
 
     bool _canAttack = true;
     bool _isGrounded = false;
+    bool _direction;
 
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
+        _muzzle = _rigthMuzzle;
+        _direction = true;
     }
 
     protected abstract void Attack();
@@ -154,10 +172,14 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         if (_dir.x > 0)
         {
             _sp.flipX = false;
+            _muzzle = _rigthMuzzle;
+            _direction = false;
         }
         else if (_dir.x < 0)
         {
             _sp.flipX = true;
+            _muzzle = _leftMuzzle;
+            _direction = true;
         }
     }
 }

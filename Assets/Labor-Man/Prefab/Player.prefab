@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5183535919233127510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3545663775904702673}
+  m_Layer: 0
+  m_Name: LeftMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3545663775904702673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183535919233127510}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 240873828034577180}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5719134947562967375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 602470570887198598}
+  m_Layer: 0
+  m_Name: RightMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &602470570887198598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5719134947562967375}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.75, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 240873828034577180}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7827150816789714449
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,8 +129,8 @@ GameObject:
   - component: {fileID: 744606742057753229}
   - component: {fileID: 6207748396930512128}
   - component: {fileID: 6208922090519139770}
-  - component: {fileID: 895510003616931587}
   - component: {fileID: 2010934834119059488}
+  - component: {fileID: 6395580288685414714}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -90,6 +150,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1906662176119566258}
+  - {fileID: 602470570887198598}
+  - {fileID: 3545663775904702673}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -180,28 +242,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5, y: 1}
   m_Direction: 0
---- !u!114 &895510003616931587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8773102766708121106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67356fc12bc347a4ebf582843024a7e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isGodMode: 0
-  _speed: 10
-  _enemyTag: Enemy
-  _itemTag: Item
-  _groundTag: Ground
-  _wallTag: 
-  _hp: 100
-  _jumpPower: 10
-  _interval: 5
-  _enemyBulletTag: 
 --- !u!114 &2010934834119059488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +270,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 895510003616931587}
+      - m_Target: {fileID: 6395580288685414714}
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -248,7 +288,18 @@ MonoBehaviour:
     m_ActionId: 61a9f3fc-9dd1-449c-81d9-d8372e8b4ad7
     m_ActionName: Player/Look
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6395580288685414714}
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2d737c86-0ee0-428e-a596-da574433a08f
     m_ActionName: Player/Fire
   - m_PersistentCalls:
@@ -293,7 +344,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 895510003616931587}
+      - m_Target: {fileID: 6395580288685414714}
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -311,3 +362,30 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6395580288685414714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8773102766708121106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea8670a1b0c6f04494443d6b9c43409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isGodMode: 0
+  _rigthMuzzle: {fileID: 602470570887198598}
+  _leftMuzzle: {fileID: 3545663775904702673}
+  _speed: 10
+  _power: 5
+  _enemyTag: Enemy
+  _itemTag: Item
+  _groundTag: Ground
+  _wallTag: Wall
+  _hp: 100
+  _jumpPower: 10
+  _interval: 2
+  _enemyBulletTag: EnemyBullet
+  _attackGameObject: {fileID: 7103314314072043114, guid: 67e5ed3b27cc52e4b9c0e0c5963b36ca,
+    type: 3}
