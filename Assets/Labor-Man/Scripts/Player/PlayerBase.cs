@@ -2,77 +2,103 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Threading.Tasks;
 
-public class PlayerBase : MonoBehaviour, IDamageble
+public abstract class PlayerBase : MonoBehaviour, IDamageble
 {
-    Rigidbody2D _rb;
-    Vector2 _dir;
-    SpriteRenderer _sp;
+    public bool IsGodMode => _isGodMode;
+    public int HP => _hp;
+    public int Power => _power;
+    public bool Direction => _direction;
 
     [SerializeField]
     [Header("無敵モード")]
     bool _isGodMode = false;
 
     [SerializeField]
+    [Header("右のMuzzleのポジション")]
+    protected Transform _rigthMuzzle;
+
+    [SerializeField]
+    [Header("左のMuzzleのポジション")]
+    protected Transform _leftMuzzle;
+
+    [SerializeField]
     [Header("Playerのスピード")]
-    float _speed;
+    float _speed = 10f; 
 
     [SerializeField]
-    [Header("速度抑制用の数値")]
-    float _controlSpeed = 100;
-
-    [SerializeField]
-    [Header("敵のタグ")]
-    string _enemyTag;
-
-    [SerializeField]
-    [Header("Itemのタグ")]
-    string _itemTag;
-
-    [SerializeField]
-    [Header("地面のタグ")]
-    string _groundTag;
-
-    [SerializeField]
-    [Header("壁のタグ")]
-    string _wallTag;
+    [Header("攻撃力")]
+    int _power;
 
     [SerializeField]
     [Header("PlayerのHP")]
-    int _hp;
+    int _hp = 100;
 
     [SerializeField]
     [Header("ジャンプ力")]
-    float _jumpPower;
+    float _jumpPower = 10f;
 
     [SerializeField]
     [Header("攻撃のインターバル")]
-    float _interval;
+    int _interval = 2;
+
+    [SerializeField]
+    [Header("敵のタグ")]
+    string _enemyTag = "Enemy";
+
+    [SerializeField]
+    [Header("Itemのタグ")]
+    string _itemTag = "Item";
+
+    [SerializeField]
+    [Header("地面のタグ")]
+    string _groundTag = "Ground";
+
+    [SerializeField]
+    [Header("壁のタグ")]
+    string _wallTag = "Wall";
+
+    [SerializeField]
+    [Header("敵の攻撃のタグ")]
+    string _enemyBulletTag = "EnemyBullet";
+
+    [SerializeField]
+    [Header("ゲームゾーンのタグ")]
+    string _gameZoneTag = "GameZone";
+
+    [SerializeField]
+    [Header("遠距離攻撃時に生成したいオブジェクト")]
+    protected GameObject _attackGameObject;
 
 
-    public bool IsGodMode => _isGodMode;
+    Rigidbody2D _rb;
+    Vector2 _dir;
+    SpriteRenderer _sp;
+    protected Transform _muzzle;
 
-    public int HP => _hp;
-
+    bool _canAttack = true;
     bool _isGrounded = false;
+    bool _direction;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sp = GetComponent<SpriteRenderer>();
+        _muzzle = _rigthMuzzle;
+        _direction = true;
     }
 
-    protected virtual void Attack()
+    protected void OnDisable()
     {
-        Debug.Log("Attack!");
+        GameManager.Instance.GameOver();
     }
 
-    protected virtual void SpecialAttack()
-    {
-        Debug.Log("SpecialAttack!");
-    }
+    protected abstract void Attack();
 
-    protected void Heel(int recoveryAmount)
+    protected abstract void SpecialAttack();
+
+    protected virtual void Heal(int recoveryAmount)
     {
         _hp += recoveryAmount;
     }
@@ -85,8 +111,8 @@ public class PlayerBase : MonoBehaviour, IDamageble
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
-        _dir = new Vector2(inputMoveMent.x,0);
-        _rb.velocity = _dir * _speed;
+        _dir.x = inputMoveMent.x;
+        _rb.velocity = _dir.normalized * _speed;
         Inversion();
     }
 
@@ -99,7 +125,29 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public async void OnAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            _canAttack = false;
+            Attack();
+            await Task.Delay(_interval);
+            _canAttack = true;
+        }
+    }
+
+    public async void OnSpecialAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            _canAttack = false;
+            SpecialAttack();
+            await Task.Delay(_interval);
+            _canAttack = true;
+        }
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == _groundTag)
         {
@@ -107,23 +155,45 @@ public class PlayerBase : MonoBehaviour, IDamageble
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    protected virtual void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == _groundTag)
         {
             _isGrounded = false;
         }
-    } 
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == _enemyTag)
+        {
+            //IDamageble.AddDamage(collision.gameObject.GetComponent<EnemyBase>().Power);
+        }
+
+        if(collision.tag == _enemyBulletTag)
+        {
+            //IDamageble.AddDamage(collision.GetComponent<BulletBase>().Power);
+        }
+
+        if(collision.tag == _gameZoneTag)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Inversion()
     {
         if (_dir.x > 0)
         {
             _sp.flipX = false;
+            _muzzle = _rigthMuzzle;
+            _direction = false;
         }
         else if (_dir.x < 0)
         {
             _sp.flipX = true;
+            _muzzle = _leftMuzzle;
+            _direction = true;
         }
     }
 }
