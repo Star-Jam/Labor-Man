@@ -7,7 +7,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     public PlayerBase Player => _player;
     public bool Clear => _isClear;
-    public bool GameOver => _isGameOver;
+    public bool IsGameOver => _isGameOver;
 
     PlayerBase _player;
     bool _isClear = false;
@@ -28,6 +28,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
+        PlayerSearch();
+    }
+
+    private void PlayerSearch()
+    {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+    }
+
+    public void GameOver()
+    {
+        OnGameOver();
     }
 }

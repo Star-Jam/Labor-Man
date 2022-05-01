@@ -11,7 +11,7 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
 
     private void Start()
     {
-        GameManager.Instance.OnClear += () => LoadScene(_nextSceneName);
+
     }
 
     void LoadScene(string name)

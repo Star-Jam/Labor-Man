@@ -64,6 +64,10 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     string _enemyBulletTag = "EnemyBullet";
 
     [SerializeField]
+    [Header("ゲームゾーンのタグ")]
+    string _gameZoneTag = "GameZone";
+
+    [SerializeField]
     [Header("遠距離攻撃時に生成したいオブジェクト")]
     protected GameObject _attackGameObject;
 
@@ -85,6 +89,11 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         _direction = true;
     }
 
+    protected void OnDisable()
+    {
+        GameManager.Instance.GameOver();
+    }
+
     protected abstract void Attack();
 
     protected abstract void SpecialAttack();
@@ -103,7 +112,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     {
         Vector2 inputMoveMent = context.ReadValue<Vector2>();
         _dir.x = inputMoveMent.x;
-        _rb.velocity = _dir * _speed;
+        _rb.velocity = _dir.normalized * _speed;
         Inversion();
     }
 
@@ -164,6 +173,11 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         if(collision.tag == _enemyBulletTag)
         {
             //IDamageble.AddDamage(collision.GetComponent<BulletBase>().Power);
+        }
+
+        if(collision.tag == _gameZoneTag)
+        {
+            Destroy(this.gameObject);
         }
     }
 
