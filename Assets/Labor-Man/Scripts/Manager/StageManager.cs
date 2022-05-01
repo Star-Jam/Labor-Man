@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
-    public string AvtiveSceneName => _avtiveSceneName;
-
     [SerializeField]
     [Header("スクロールするスピード")]
     float _scrollSpeed;
@@ -19,8 +17,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     [Header("ステージのしきい値")]
     Transform _destroyPoint;
 
-    string _avtiveSceneName;
-
     GameObject[] _nextStages;
 
     protected override void Awake()
@@ -31,7 +27,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
     private void Start()
     {
-        GetSceneName();
         Init();
     }
 
@@ -39,11 +34,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     {
         NextStageSet();
         StageMove();
-    }
-
-    void GetSceneName()
-    {
-        _avtiveSceneName = SceneManager.GetActiveScene().name;
     }
 
     void Init()
