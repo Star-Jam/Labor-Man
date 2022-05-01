@@ -106,7 +106,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     public void AddDamage(int damage)
     {
         _hp -= damage;
-
+        PlayerDeath();
     }
 
     public void OnMove(InputAction.CallbackContext context)
