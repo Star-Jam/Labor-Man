@@ -25,7 +25,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     [SerializeField]
     [Header("Playerのスピード")]
-    float _speed = 10f; 
+    float _speed = 10f;
 
     [SerializeField]
     [Header("攻撃力")]
@@ -119,7 +119,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!_isGrounded) return;
-        if(context.started)
+        if (context.started)
         {
             _rb.velocity = Vector2.up * _jumpPower;
         }
@@ -127,7 +127,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     public async void OnAttack(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             _canAttack = false;
             Attack();
@@ -138,7 +138,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     public async void OnSpecialAttack(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             _canAttack = false;
             SpecialAttack();
@@ -149,7 +149,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == _groundTag || collision.gameObject.tag == _wallTag)
+        if (collision.gameObject.tag == _groundTag || collision.gameObject.tag == _wallTag)
         {
             _isGrounded = true;
         }
@@ -165,17 +165,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == _enemyTag)
-        {
-            //IDamageble.AddDamage(collision.gameObject.GetComponent<EnemyBase>().Power);
-        }
-
-        if(collision.tag == _enemyBulletTag)
-        {
-            //IDamageble.AddDamage(collision.GetComponent<BulletBase>().Power);
-        }
-
-        if(collision.tag == _gameZoneTag)
+        if (collision.tag == _gameZoneTag)
         {
             Destroy(this.gameObject);
         }
