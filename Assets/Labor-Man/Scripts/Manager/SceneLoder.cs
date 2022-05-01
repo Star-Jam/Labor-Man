@@ -9,6 +9,11 @@ public class SceneLoder : SingletonMonoBehaviour<SceneLoder>
     [Header("遷移したいシーンの名前")]
     string _nextSceneName;
 
+    private void Start()
+    {
+        GameManager.Instance.OnGameOver += () => NextScene();
+    }
+
     public void NextScene()
     {
         LoadScene(_nextSceneName);
