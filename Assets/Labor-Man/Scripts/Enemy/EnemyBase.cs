@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour,IDamageble
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
@@ -97,6 +97,12 @@ public class EnemyBase : MonoBehaviour
             }
         }
      }
+
+    public void AddDamage(int damage)
+    {
+        _enemyHp -= damage;
+    }
+
     enum Move
     {
         Idle,
