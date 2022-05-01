@@ -29,6 +29,7 @@ public class BulletBase : MonoBehaviour
 
     protected Vector2 _dir = Vector2.one;
     Rigidbody2D _rb;
+    SpriteRenderer _sp;
 
     enum MoveMode
     {
@@ -45,6 +46,7 @@ public class BulletBase : MonoBehaviour
     protected virtual void OnEnable()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _sp = GetComponent<SpriteRenderer>();
         if (!_isDecisionDirection) FiringFoeFront();
         DecisionDirection();
         if (_moveMode == MoveMode.Strat)
@@ -83,6 +85,7 @@ public class BulletBase : MonoBehaviour
         if(GameManager.Instance.Player.Direction)
         {
             _direction = Direction.Left;
+            _sp.flipX = true;
         }
         else
         {

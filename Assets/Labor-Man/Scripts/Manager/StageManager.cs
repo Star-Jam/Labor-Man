@@ -13,9 +13,11 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     [Header("ステージのプレハブ")]
     GameObject[] _stages;
 
-    string _avtiveSceneName;
+    [SerializeField]
+    [Header("ステージのしきい値")]
+    Transform _destroyPoint;
 
-    public string AvtiveSceneName => _avtiveSceneName;
+    GameObject[] _nextStages;
 
     protected override void Awake()
     {
@@ -25,37 +27,42 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
     private void Start()
     {
-        GetSceneName();
+        Init();
     }
 
-    void GetSceneName()
+    private void Update()
     {
-        _avtiveSceneName = SceneManager.GetActiveScene().name;
+        NextStageSet();
+        StageMove();
     }
 
     void Init()
     {
-        _stages[0].transform.position = new Vector3(0, 0, 0);
-        _stages[0].SetActive(true);
+        _nextStages[0] = _stages[0];
+        _nextStages[0].transform.position = new Vector3(0, 0, 0);
+        _nextStages[0].SetActive(true);
     }
 
     void NextStageSet()
     {
-        _stages[Random.Range(0, _stages.Length)].transform.position = new Vector3(20, 0, 0);
+        _nextStages[2] = _stages[Random.Range(0, _stages.Length)];
     }
 
     void StageCycle()
     {
-
+        _nextStages[0] = _nextStages[1];
+        _nextStages[1] = _nextStages[2];
     }
 
-    void RemoveStage()
+    void StageMove()
     {
-
-    }
-
-    void AllFalse()
-    {
-
+        for (int i = 0; i < _nextStages.Length; i++)
+        {
+            _nextStages[i].transform.position += new Vector3(_scrollSpeed, 0, 0);
+        }
+        //if(_nextStages[0].transform.position > )
+        //{
+        //    StageCycle();
+        //}
     }
 }
