@@ -25,7 +25,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     [SerializeField]
     [Header("Playerのスピード")]
-    float _speed = 10f;
+    protected float _speed = 10f;
 
     [SerializeField]
     [Header("攻撃力")]
@@ -72,8 +72,8 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     protected GameObject _attackGameObject;
 
 
-    Rigidbody2D _rb;
-    Vector2 _dir;
+    protected Rigidbody2D _rb;
+    protected Vector2 _dir;
     SpriteRenderer _sp;
     protected Transform _muzzle;
 
@@ -103,9 +103,10 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         _hp += recoveryAmount;
     }
 
-    void IDamageble.AddDamage(int damage)
+    public void AddDamage(int damage)
     {
         _hp -= damage;
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -168,6 +169,14 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         if (collision.tag == _gameZoneTag)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    void PlayerDeath()
+    {
+        if(_hp < 1)
+        {
+            Destroy(gameObject);
         }
     }
 
