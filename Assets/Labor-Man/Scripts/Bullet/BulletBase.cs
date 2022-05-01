@@ -27,6 +27,10 @@ public class BulletBase : MonoBehaviour
     [Header("動かす方向")]
     Direction _direction;
 
+    [SerializeField]
+    [Header("攻撃対象のタグ")]
+    string _enemyTag;
+
     protected Vector2 _dir = Vector2.one;
     Rigidbody2D _rb;
     SpriteRenderer _sp;
@@ -60,6 +64,19 @@ public class BulletBase : MonoBehaviour
         if(_moveMode == MoveMode.Update)
         {
             BulletMove();
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == _enemyTag)
+        {
+            collision.gameObject.GetComponent<IDamageble>().AddDamage(_damage);
         }
     }
 
