@@ -25,7 +25,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     [SerializeField]
     [Header("Playerのスピード")]
-    float _speed = 10f;
+    protected float _speed = 10f;
 
     [SerializeField]
     [Header("攻撃力")]
@@ -72,8 +72,8 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     protected GameObject _attackGameObject;
 
 
-    Rigidbody2D _rb;
-    Vector2 _dir;
+    protected Rigidbody2D _rb;
+    protected Vector2 _dir;
     SpriteRenderer _sp;
     protected Transform _muzzle;
 
