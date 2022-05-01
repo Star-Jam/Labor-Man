@@ -149,5 +149,5 @@ MonoBehaviour:
   _wallTag: Wall
   _playerTag: Player
   _enemyTag: Enemy
-  _onEnemyDamage: 0
+  _onEnemyDamage: 1
   _move: 1
