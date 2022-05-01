@@ -149,7 +149,7 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == _groundTag)
+        if(collision.gameObject.tag == _groundTag || collision.gameObject.tag == _wallTag)
         {
             _isGrounded = true;
         }

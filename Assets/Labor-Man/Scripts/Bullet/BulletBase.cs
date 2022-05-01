@@ -63,6 +63,11 @@ public class BulletBase : MonoBehaviour
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
+
     protected virtual void BulletMove()
     {
         _rb.velocity = _dir * _bulletSpeed;
