@@ -25,6 +25,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     [Header("ステージの生成位置をどれくらいずらすか")]
     int _misaligned;
 
+    [SerializeField]
     GameObject[] _nextStages;
 
     protected override void Awake()
