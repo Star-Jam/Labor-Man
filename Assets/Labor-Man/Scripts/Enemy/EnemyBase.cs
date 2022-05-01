@@ -101,6 +101,7 @@ public class EnemyBase : MonoBehaviour,IDamageble
     public void AddDamage(int damage)
     {
         _enemyHp -= damage;
+        EnemyDeath();
     }
 
     enum Move
