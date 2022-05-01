@@ -103,9 +103,10 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         _hp += recoveryAmount;
     }
 
-    void IDamageble.AddDamage(int damage)
+    public void AddDamage(int damage)
     {
         _hp -= damage;
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -168,6 +169,14 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
         if (collision.tag == _gameZoneTag)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    void PlayerDeath()
+    {
+        if(_hp < 1)
+        {
+            Destroy(gameObject);
         }
     }
 
