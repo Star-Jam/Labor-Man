@@ -388,5 +388,5 @@ MonoBehaviour:
   _wallTag: Wall
   _enemyBulletTag: EnemyBullet
   _gameZoneTag: GameZone
-  _attackGameObject: {fileID: 7103314314072043114, guid: 67e5ed3b27cc52e4b9c0e0c5963b36ca,
+  _attackGameObject: {fileID: 7939780339084226288, guid: 67e5ed3b27cc52e4b9c0e0c5963b36ca,
     type: 3}
