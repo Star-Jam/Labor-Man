@@ -29,7 +29,7 @@ public class BulletBase : MonoBehaviour
 
     [SerializeField]
     [Header("攻撃対象のタグ")]
-    string _enemyTag;
+    string _enemyTag = "Enemy";
 
     protected Vector2 _dir = Vector2.one;
     Rigidbody2D _rb;

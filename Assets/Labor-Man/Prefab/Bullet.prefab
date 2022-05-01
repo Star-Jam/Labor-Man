@@ -122,7 +122,7 @@ MonoBehaviour:
   _moveMode: 0
   _isDecisionDirection: 0
   _direction: 0
-  _enemyTag: 
+  _enemyTag: Enemy
 --- !u!58 &7011595194634023909
 CircleCollider2D:
   m_ObjectHideFlags: 0
