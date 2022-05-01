@@ -8,7 +8,7 @@ public class EnemyBase : MonoBehaviour,IDamageble
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
-    public float EnemyHp => _enemyHp; 
+    public int EnemyHp => _enemyHp; 
     SpriteRenderer _sp;
 
     [SerializeField]
