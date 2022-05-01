@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class EnemyBase : MonoBehaviour,IDamageble
+public class EnemyBase : MonoBehaviour, IDamageble
 {
     public float Speed => _enemySpeed;
     Transform _myTransform = default;
@@ -26,6 +26,14 @@ public class EnemyBase : MonoBehaviour,IDamageble
     [SerializeField]
     [Header("壁のtag")]
     string _wallTag = "Wall";
+
+    [SerializeField]
+    [Header("プレイヤーのtag")]
+    string _playerTag = "Player";
+
+    [SerializeField]
+    [Header("エネミーのtag")]
+    string _enemyTag = "Enemy";
 
     [SerializeField]
     [Header("プレイヤーと接触時に与えるダメージ")]
@@ -83,7 +91,7 @@ public class EnemyBase : MonoBehaviour,IDamageble
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == _wallTag)
+        if (collision.gameObject.tag == _wallTag || collision.gameObject.tag == _enemyTag)
         {
             if (_move == Move.Right)
             {
@@ -95,6 +103,11 @@ public class EnemyBase : MonoBehaviour,IDamageble
                 _move = Move.Right;
                 _sp.flipX = true;
             }
+        }
+        if (collision.gameObject.tag == _playerTag)
+        {
+            collision.gameObject.GetComponent<IDamageble>().AddDamage(_onEnemyDamage);
+
         }
      }
 
