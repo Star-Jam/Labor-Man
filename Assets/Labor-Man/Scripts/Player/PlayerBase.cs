@@ -32,6 +32,18 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     int _power;
 
     [SerializeField]
+    [Header("PlayerのHP")]
+    int _hp = 100;
+
+    [SerializeField]
+    [Header("ジャンプ力")]
+    float _jumpPower = 10f;
+
+    [SerializeField]
+    [Header("攻撃のインターバル")]
+    int _interval = 2;
+
+    [SerializeField]
     [Header("敵のタグ")]
     string _enemyTag = "Enemy";
 
@@ -46,18 +58,6 @@ public abstract class PlayerBase : MonoBehaviour, IDamageble
     [SerializeField]
     [Header("壁のタグ")]
     string _wallTag = "Wall";
-
-    [SerializeField]
-    [Header("PlayerのHP")]
-    int _hp = 100;
-
-    [SerializeField]
-    [Header("ジャンプ力")]
-    float _jumpPower = 10f;
-
-    [SerializeField]
-    [Header("攻撃のインターバル")]
-    int _interval = 2;
 
     [SerializeField]
     [Header("敵の攻撃のタグ")]

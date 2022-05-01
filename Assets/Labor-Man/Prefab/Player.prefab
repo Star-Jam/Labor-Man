@@ -115,7 +115,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 0.1}
+  m_Size: {x: 1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &8773102766708121106
 GameObject:
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6395580288685414714}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,13 +379,14 @@ MonoBehaviour:
   _leftMuzzle: {fileID: 3545663775904702673}
   _speed: 10
   _power: 5
+  _hp: 100
+  _jumpPower: 10
+  _interval: 2
   _enemyTag: Enemy
   _itemTag: Item
   _groundTag: Ground
   _wallTag: Wall
-  _hp: 100
-  _jumpPower: 10
-  _interval: 2
   _enemyBulletTag: EnemyBullet
+  _gameZoneTag: GameZone
   _attackGameObject: {fileID: 7103314314072043114, guid: 67e5ed3b27cc52e4b9c0e0c5963b36ca,
     type: 3}
