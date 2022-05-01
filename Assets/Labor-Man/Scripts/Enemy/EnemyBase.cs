@@ -91,7 +91,7 @@ public class EnemyBase : MonoBehaviour, IDamageble
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == _wallTag || collision.gameObject.tag == _enemyTag)
+        if (collision.gameObject.tag == _wallTag || collision.gameObject.tag == _enemyTag || collision.gameObject.tag == _playerTag)
         {
             if (_move == Move.Right)
             {

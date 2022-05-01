@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5733247365049840024}
   m_Layer: 0
   m_Name: Zako
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb12544ee6d5474429db31bbfc959c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpeed: 5
+  _enemySpeed: 3
   _enemySpeedControl: 100
   _enemyHp: 1
   _wallTag: Wall
